@@ -7,7 +7,6 @@ Vagrant.configure("2") do |config|
   config.vm.define "Musify-db-env"
   config.vm.hostname = "Musify-db-env"
 
-  # config.vm.network "forwarded_port", guest: 3306, host: 3306
   config.vm.network "public_network", ip: "192.168.1.25"
 
 

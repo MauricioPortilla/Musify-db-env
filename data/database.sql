@@ -2,99 +2,108 @@ CREATE DATABASE Musify;
 \c Musify;
 
 CREATE TABLE account (
-    accountId SERIAL PRIMARY KEY NOT NULL,
-    email varchar(255) NOT NULL,
+    account_id SERIAL PRIMARY KEY NOT NULL,
+    email varchar(255) UNIQUE NOT NULL,
     password varchar(255) NOT NULL,
     name varchar(50) NOT NULL,
-    lastName varchar(50) NOT NULL,
-    secondLastName varchar(50) NULL,
-    creationDate date NOT NULL
+    last_name varchar(50) NOT NULL,
+    second_last_name varchar(50) NULL,
+    creation_date date NOT NULL
+);
+
+CREATE TABLE subscription (
+    subscription_id SERIAL PRIMARY KEY NOT NULL,
+    account_id int NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES account(account_id),
+    cost float NOT NULL,
+    startDate date NOT NULL,
+    endDate date NOT NULL
 );
 
 CREATE TABLE account_song (
-    accountSongId SERIAL PRIMARY KEY NOT NULL,
-    accountId int NOT NULL,
-    FOREIGN KEY (accountId) REFERENCES Account(accountId),
+    account_song_id SERIAL PRIMARY KEY NOT NULL,
+    account_id int NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES account(account_id),
     title varchar(50) NOT NULL,
-    songLocation varchar(255) NOT NULL,
-    uploadDate date NOT NULL
+    song_location varchar(255) NOT NULL,
+    upload_date date NOT NULL
 );
 
 CREATE TABLE playlist (
-    playlistId SERIAL PRIMARY KEY NOT NULL,
-    accountId int NOT NULL,
-    FOREIGN KEY (accountId) REFERENCES Account(accountId),
+    playlist_id SERIAL PRIMARY KEY NOT NULL,
+    account_id int NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES account(account_id),
     name varchar(20) NOT NULL
 );
 
 CREATE TABLE album (
-    albumId SERIAL PRIMARY KEY NOT NULL,
+    album_id SERIAL PRIMARY KEY NOT NULL,
     name varchar(25) NOT NULL,
-    launchYear int NOT NULL,
+    launch_year int NOT NULL,
     discography varchar(50) NOT NULL,
-    imageLocation varchar(255) NOT NULL
+    image_location varchar(255) NOT NULL
 );
 
 CREATE TABLE genre (
-    genreId SERIAL PRIMARY KEY NOT NULL,
+    genre_id SERIAL PRIMARY KEY NOT NULL,
     name varchar(15) NOT NULL
 );
 
 CREATE TABLE song (
-    songId SERIAL PRIMARY KEY NOT NULL,
-    albumId int NOT NULL,
-    FOREIGN KEY (albumId) REFERENCES Album(albumId),
-    genreId int NOT NULL,
-    FOREIGN KEY (genreId) REFERENCES Genre(genreId),
+    song_id SERIAL PRIMARY KEY NOT NULL,
+    album_id int NOT NULL,
+    FOREIGN KEY (album_id) REFERENCES album(album_id),
+    genre_id int NOT NULL,
+    FOREIGN KEY (genre_id) REFERENCES genre(genre_id),
     title varchar(30) NOT NULL
 );
 
 CREATE TABLE song_rate (
-    songRateId SERIAL PRIMARY KEY NOT NULL,
-    accountId int NOT NULL,
-    FOREIGN KEY (accountId) REFERENCES Account(accountId),
-    songId int NOT NULL,
-    FOREIGN KEY (songId) REFERENCES Song(songId),
+    song_rate_id SERIAL PRIMARY KEY NOT NULL,
+    account_id int NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES account(account_id),
+    song_id int NOT NULL,
+    FOREIGN KEY (song_id) REFERENCES song(song_id),
     rate int NOT NULL
 );
 
 CREATE TABLE artist (
-    artistId SERIAL PRIMARY KEY NOT NULL,
-    accountId int NOT NULL,
-    FOREIGN KEY (accountId) REFERENCES Account(accountId),
+    artist_id SERIAL PRIMARY KEY NOT NULL,
+    account_id int NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES account(account_id),
     name varchar(50) NOT NULL,
-    lastName varchar(50) NOT NULL,
-    secondLastName varchar(50) NULL
+    last_name varchar(50) NOT NULL,
+    second_last_name varchar(50) NULL
 );
 
 CREATE TABLE playlist_song (
-    playlistId int NOT NULL,
-    FOREIGN KEY (playlistId) REFERENCES Playlist(playlistId),
-    songId int NOT NULL,
-    FOREIGN KEY (songId) REFERENCES Song(songId),
-    PRIMARY KEY (playlistId, songId)
+    playlist_id int NOT NULL,
+    FOREIGN KEY (playlist_id) REFERENCES playlist(playlist_id),
+    song_id int NOT NULL,
+    FOREIGN KEY (song_id) REFERENCES song(song_id),
+    PRIMARY KEY (playlist_id, song_id)
 );
 
 CREATE TABLE album_artist (
-    albumId int NOT NULL,
-    FOREIGN KEY (albumId) REFERENCES Album(albumId),
-    artistId int NOT NULL,
-    FOREIGN KEY (artistId) REFERENCES Artist(artistId),
-    PRIMARY KEY (albumId, artistId)
+    album_id int NOT NULL,
+    FOREIGN KEY (album_id) REFERENCES album(album_id),
+    artist_id int NOT NULL,
+    FOREIGN KEY (artist_id) REFERENCES artist(artist_id),
+    PRIMARY KEY (album_id, artist_id)
 );
 
 CREATE TABLE song_artist (
-    songId int NOT NULL,
-    FOREIGN KEY (songId) REFERENCES Song(songId),
-    artistId int NOT NULL,
-    FOREIGN KEY (artistId) REFERENCES Artist(artistId),
-    PRIMARY KEY (songId, artistId)
+    song_id int NOT NULL,
+    FOREIGN KEY (song_id) REFERENCES song(song_id),
+    artist_id int NOT NULL,
+    FOREIGN KEY (artist_id) REFERENCES artist(artist_id),
+    PRIMARY KEY (song_id, artist_id)
 );
 
 CREATE TABLE artist_genre (
-    artistId int NOT NULL,
-    FOREIGN KEY (artistId) REFERENCES Artist(artistId),
-    genreId int NOT NULL,
-    FOREIGN KEY (genreId) REFERENCES Genre(genreId),
-    PRIMARY KEY (artistId, genreId)
+    artist_id int NOT NULL,
+    FOREIGN KEY (artist_id) REFERENCES artist(artist_id),
+    genre_id int NOT NULL,
+    FOREIGN KEY (genre_id) REFERENCES genre(genre_id),
+    PRIMARY KEY (artist_id, genre_id)
 );
