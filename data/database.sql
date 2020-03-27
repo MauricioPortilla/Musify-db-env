@@ -71,9 +71,7 @@ CREATE TABLE artist (
     artist_id SERIAL PRIMARY KEY NOT NULL,
     account_id int NOT NULL,
     FOREIGN KEY (account_id) REFERENCES account(account_id),
-    name varchar(50) NOT NULL,
-    last_name varchar(50) NOT NULL,
-    second_last_name varchar(50) NULL
+    artistic_name varchar(50) NOT NULL
 );
 
 CREATE TABLE playlist_song (
