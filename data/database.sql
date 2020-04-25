@@ -24,6 +24,7 @@ CREATE TABLE account_song (
     account_id int NOT NULL,
     FOREIGN KEY (account_id) REFERENCES account(account_id),
     title varchar(255) NOT NULL,
+    duration varchar(10) NOT NULL,
     song_location varchar(255) NOT NULL,
     upload_date date NOT NULL
 );
@@ -37,6 +38,7 @@ CREATE TABLE playlist (
 
 CREATE TABLE album (
     album_id SERIAL PRIMARY KEY NOT NULL,
+    type varchar(15) NOT NULL,
     name varchar(25) NOT NULL,
     launch_year int NOT NULL,
     discography varchar(50) NOT NULL,
@@ -55,16 +57,25 @@ CREATE TABLE song (
     genre_id int NOT NULL,
     FOREIGN KEY (genre_id) REFERENCES genre(genre_id),
     title varchar(30) NOT NULL,
-    song_location varchar(255) NOT NULL
+    duration varchar(10) NOT NULL,
+    song_location varchar(255) NOT NULL,
+    status varchar(20) NOT NULL
 );
 
-CREATE TABLE song_rate (
-    song_rate_id SERIAL PRIMARY KEY NOT NULL,
+CREATE TABLE song_like (
     account_id int NOT NULL,
     FOREIGN KEY (account_id) REFERENCES account(account_id),
     song_id int NOT NULL,
     FOREIGN KEY (song_id) REFERENCES song(song_id),
-    rate int NOT NULL
+    PRIMARY KEY (account_id, song_id)
+);
+
+CREATE TABLE song_dislike (
+    account_id int NOT NULL,
+    FOREIGN KEY (account_id) REFERENCES account(account_id),
+    song_id int NOT NULL,
+    FOREIGN KEY (song_id) REFERENCES song(song_id),
+    PRIMARY KEY (account_id, song_id)
 );
 
 CREATE TABLE artist (
