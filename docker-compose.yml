@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+    musify-db-env:
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+        expose:
+            - "5432"
+        ports:
+            - "0.0.0.0:5432:5432"
+        environment:
+            POSTGRES_PASSWORD: Musify_0903
+        network_mode: musify_network # Requiere ejecutarse docker network create --driver bridge musify_network

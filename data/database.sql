@@ -1,5 +1,7 @@
-CREATE DATABASE Musify;
-\c Musify;
+CREATE USER musify_user WITH PASSWORD 'Musify_0903';
+CREATE DATABASE musify OWNER musify_user;
+GRANT ALL PRIVILEGES ON DATABASE musify TO musify_user;
+\c musify musify_user;
 
 CREATE TABLE account (
     account_id SERIAL PRIMARY KEY NOT NULL,
