@@ -17,8 +17,8 @@ CREATE TABLE subscription (
     account_id int NOT NULL,
     FOREIGN KEY (account_id) REFERENCES account(account_id),
     cost float NOT NULL,
-    startDate date NOT NULL,
-    endDate date NOT NULL
+    start_date date NOT NULL,
+    end_date date NOT NULL
 );
 
 CREATE TABLE account_song (
@@ -35,7 +35,7 @@ CREATE TABLE playlist (
     playlist_id SERIAL PRIMARY KEY NOT NULL,
     account_id int NOT NULL,
     FOREIGN KEY (account_id) REFERENCES account(account_id),
-    name varchar(20) NOT NULL
+    name varchar(50) NOT NULL
 );
 
 CREATE TABLE album (
@@ -58,7 +58,7 @@ CREATE TABLE song (
     FOREIGN KEY (album_id) REFERENCES album(album_id),
     genre_id int NOT NULL,
     FOREIGN KEY (genre_id) REFERENCES genre(genre_id),
-    title varchar(30) NOT NULL,
+    title varchar(255) NOT NULL,
     duration varchar(10) NOT NULL,
     song_location varchar(255) NOT NULL,
     status varchar(20) NOT NULL
