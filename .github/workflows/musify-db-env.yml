@@ -12,7 +12,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
+    - name: Create docker network
+      run: docker network create --driver bridge --subnet 172.250.6.0/24 musify_network
     - name: Build the docker-compose
       run: docker-compose build
     - name: Up the docker-compose as daemon
