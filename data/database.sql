@@ -51,6 +51,7 @@ CREATE TABLE genre (
     genre_id SERIAL PRIMARY KEY NOT NULL,
     name varchar(15) NOT NULL
 );
+INSERT INTO genre (name) VALUES ('Pop'), ('Rock'), ('Metal'), ('Electrónica'), ('Hip-Hop'), ('Clásico'), ('Blues'), ('Jazz');
 
 CREATE TABLE song (
     song_id SERIAL PRIMARY KEY NOT NULL,
